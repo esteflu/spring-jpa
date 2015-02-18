@@ -1,5 +1,6 @@
 package example.controler;
 
+import example.PersonService;
 import example.domain.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,15 +12,24 @@ import example.repository.PersonRepository;
 public class PersonController {
 
     @Autowired
-    private PersonRepository personRepository;
+    private PersonService personService;
 
     @RequestMapping("/")
     @ResponseBody
-    public String test() {
-        Person person = new Person();
+    public String createSamplePerson() {
+        personService.save(getSamplePerson());
+        return "hello";
+        /*Person person = new Person();
         person.setFirstName("First");
         person.setLastName("Test");
         personRepository.save(person);
-        return "hello";
+        return "hello";*/
+    }
+
+    private Person getSamplePerson() {
+        Person person = new Person();
+        person.setFirstName("Stefan");
+        person.setLastName("Lundberg");
+        return person;
     }
 }
