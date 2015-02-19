@@ -1,12 +1,14 @@
-package example.controler;
+package example.controller;
 
 import example.PersonService;
 import example.domain.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import example.repository.PersonRepository;
+
+import java.util.List;
 
 @Controller
 public class PersonController {
@@ -16,14 +18,20 @@ public class PersonController {
 
     @RequestMapping("/")
     @ResponseBody
-    public String createSamplePerson() {
-        personService.save(getSamplePerson());
-        return "hello";
-        /*Person person = new Person();
-        person.setFirstName("First");
-        person.setLastName("Test");
-        personRepository.save(person);
-        return "hello";*/
+    public Person createSamplePerson() {
+        return personService.save(getSamplePerson());
+    }
+
+    @RequestMapping("/all")
+    @ResponseBody
+    public List<Person> all() {
+        return personService.all();
+    }
+
+    @RequestMapping("/delete/{id}")
+    @ResponseBody
+    public void delete(@PathVariable Long id) {
+        personService.delete(id);
     }
 
     private Person getSamplePerson() {
