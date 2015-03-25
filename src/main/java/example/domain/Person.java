@@ -1,6 +1,9 @@
 package example.domain;
 
+import example.converter.LocalDateTimeConverter;
+
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "person")
@@ -9,6 +12,13 @@ public class Person {
     @Id
     @GeneratedValue
     private Long id;
+
+    /*@Temporal(TemporalType.TIMESTAMP)
+    @Column(insertable = false, updatable = false, nullable = false)
+    private Date created;*/
+
+    @Convert(converter = LocalDateTimeConverter.class)
+    private LocalDateTime created;
 
     @Column(nullable = false)
     private String firstName;
@@ -36,7 +46,25 @@ public class Person {
         return lastName;
     }
 
+   /* public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }*/
+
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
+    }
+
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+
 }

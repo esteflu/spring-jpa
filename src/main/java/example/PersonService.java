@@ -8,6 +8,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Created by stefanlundberg on 15-02-18.
@@ -16,11 +17,17 @@ import java.util.List;
 @Component
 public class PersonService {
 
+    private final static Logger logger = Logger.getLogger(PersonService.class.getName());
+
     @Autowired
     private PersonRepository personRepository;
 
     public Person save(Person person) {
         return personRepository.save(person);
+    }
+
+    public Person one(Long id) {
+        return personRepository.findOne(id);
     }
 
     public List<Person> all() {
@@ -31,7 +38,8 @@ public class PersonService {
         try {
             personRepository.delete(id);
         } catch (EmptyResultDataAccessException exception) {
-            System.out.println("no such id exists"); //TODO replace with logger
+            logger.info("no such id exists");
+
         }
     }
 

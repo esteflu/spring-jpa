@@ -16,22 +16,28 @@ public class PersonController {
     @Autowired
     private PersonService personService;
 
-    @RequestMapping("/")
+    @RequestMapping("/create")
     @ResponseBody
     public Person createSamplePerson() {
         return personService.save(getSamplePerson());
     }
 
-    @RequestMapping("/all")
+    @RequestMapping("/one/{id}")
     @ResponseBody
-    public List<Person> all() {
-        return personService.all();
+    public Person one(@PathVariable Long id) {
+        return personService.one(id);
     }
 
     @RequestMapping("/delete/{id}")
     @ResponseBody
     public void delete(@PathVariable Long id) {
         personService.delete(id);
+    }
+
+    @RequestMapping("/all")
+    @ResponseBody
+    public List<Person> all() {
+        return personService.all();
     }
 
     private Person getSamplePerson() {
